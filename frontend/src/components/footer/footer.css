@@ -1,0 +1,12 @@
+.footer{
+  background: black;
+  color: white;
+  text-align: center;
+  font-size: 1rem;
+  white-space: pre;
+  font-weight: bold;
+}
+.stickyfooter {
+ min-height: 5vh; /* will cover the 100% of viewport */
+ position: relative;
+}

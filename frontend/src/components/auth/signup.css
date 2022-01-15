@@ -1,0 +1,24 @@
+.info{
+  margin-top: 20px;  
+  text-align: center;
+  color:grey;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.form-input{
+  padding: 1.5rem 0.5rem;
+  border-radius: 0;
+}
+
+.terms{
+  font-size: 10px;
+  text-align: center;
+  color:grey;
+}
+.more-info{
+  margin-top: 20px;
+  color:grey;
+  font-size: 13px;
+  text-align: center;
+}
