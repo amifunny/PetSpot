@@ -98,7 +98,7 @@ class UploadAvatar extends Component {
     const data = new FormData();
     data.append("file", croppedImageUrl);
     data.append("upload_preset", "petspot");
-    data.append('api_key', '945468354869444')
+    data.append('api_key', '')
 
     this.setState({
       fileData: data,
