@@ -88,3 +88,10 @@ If build succeeds, you can run both frontend and backend together using -
 ```
 $ node backend/server
 ```
+
+## Screenshots
+
+<img src="screenshot/login.png" width="700px" />
+<img src="screenshot/home.png" width="700px" />
+<img src="screenshot/gallery.png" width="700px" />
+<img src="screenshot/profile.png" width="700px" />
