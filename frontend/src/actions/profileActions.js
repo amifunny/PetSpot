@@ -22,6 +22,7 @@ export const getCurrentProfile = () => dispatch => {
       })
     );
 };
+
 // Get profile by handle
 export const getProfileByHandle = (handle, history) => dispatch => {
 dispatch(clearProfile());
@@ -30,18 +31,12 @@ dispatch(clearProfile());
   axios
     .get(`/api/profile/handle/${handle}`)
     .then(res =>{
-      // console.log(res);
       dispatch({
         type: GET_PROFILE,
         payload: res.data
       })
      } )
     .catch(err =>{
-      // console.log(err)
-      // dispatch({
-      //   type: GET_ERRORS,
-      //   payload: err.response.data
-      // })
       history.push("/not-found");
     });
 };
@@ -53,14 +48,12 @@ export const getAllProfiles = () => (dispatch) => {
   axios
     .get(`/api/profile/all`)
     .then((res) => {
-      // console.log(res);
       dispatch({
         type: GET_ALL_PROFILES,
         payload: res.data,
       });
     })
     .catch((err) => {
-      // console.log(err)
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -88,15 +81,7 @@ export const deleteAccount = (history) => (dispatch) => {
     axios
       .delete("/api/profile")
       .then((res) => {
-        // dispatch({
-        //   type: SET_CURRENT_USER,
-        //   payload: {},
-        // });
-        // history.push("/");
         dispatch(logoutUser());
-        // //Remove token from localStorage otherwise after deleting account, on refreshing page --the navbar shows -- as token will still be there in headers and locastorage 
-        // localStorage.removeItem("jwtToken");
-        // setAuthToken(false);
       })
       .catch((err) =>
         dispatch({
@@ -131,7 +116,7 @@ export const clearProfile = () => {
 
 //Get suggestion list
 export const getSuggestionList = () => dispatch => {
-   dispatch(setProfileLoading());
+  dispatch(setProfileLoading());
   axios
     .get("/api/profile/suggestions")
     .then(res => {
@@ -183,7 +168,6 @@ export const getFollowingList = () => dispatch => {
   axios
     .get("/api/profile/following")
     .then(res => {
-      // const result = res.data.map(item => item.user.toString());
       let result = res.data.filter((item) => item.user !== null);
       result = result.map(item => item.user.toString());
       dispatch({
@@ -193,6 +177,7 @@ export const getFollowingList = () => dispatch => {
     })
     .catch(err => console.log(err));
 }
+
 // Upload avatar
 export const addPicture = (newPic, history) => dispatch => {
      console.log(newPic);
@@ -201,20 +186,19 @@ export const addPicture = (newPic, history) => dispatch => {
   history.push("/profile")
   })
   .catch((err) => {
-      // console.log(err)
       dispatch({
         type: GET_ERRORS,
         payload: {},
       });
     });
 };
+
 // Remove avatar
 export const removeAvatar = () => (dispatch) => {
          axios
            .put("/api/users/removeAvatar")
            .then((res) => window.location.reload(true))
            .catch((err) => {
-             // console.log(err)
              dispatch({
                type: GET_ERRORS,
                payload: {},

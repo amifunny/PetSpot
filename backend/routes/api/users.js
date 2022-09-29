@@ -15,6 +15,7 @@ const validateLoginInput = require("../../validation/login");
 // @desc    Register user
 // @access  Public
 router.post('/signup', (req, res) => {
+
   // Validation
   const { errors, isValid } = validateSignupInput(req.body);
 
@@ -44,8 +45,6 @@ router.post('/signup', (req, res) => {
             const newUser = new User({
               name: req.body.name,
               email: req.body.email,
-              //username: req.body.username,
-              //fullname: req.body.fullname,
               avatar,
               password: req.body.password,
             });
@@ -83,7 +82,6 @@ router.post('/signup', (req, res) => {
 // @route   POST api/users/login
 // @desc    Login user / returning token
 // @access  Public
-
 router.post('/login', (req,res) => {
   //Validation
   const { errors, isValid } = validateLoginInput(req.body);
@@ -125,6 +123,7 @@ router.post('/login', (req,res) => {
    })
    .catch();
 })
+
 // @route   GET api/users/current
 // @desc    Return current user
 // @access  Private
@@ -132,14 +131,12 @@ router.get('/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     return res.json(req.user);
-  })
-
-module.exports = router;
+  }
+)
 
 // @route   POST api/users/editAvatar
 // @desc    Change profile picture
 // @access  Private
-
 router.post(
   "/editAvatar",
   passport.authenticate("jwt", { session: false }),
@@ -163,7 +160,6 @@ router.post(
 // @route   PUT api/users/removeAvatar
 // @desc    Removing avatar or Defaulting to gravatr
 // @access  Private
-
 router.put('/removeAvatar', passport.authenticate("jwt", {session: false}), (req,res) => {
  User.findOne({_id: req.user.id}).then(user => {
    console.log(req.body.avatar);
@@ -179,3 +175,5 @@ router.put('/removeAvatar', passport.authenticate("jwt", {session: false}), (req
       res.status(500).send("Server Error");
    })
 });
+
+module.exports = router;

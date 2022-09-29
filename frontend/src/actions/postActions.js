@@ -48,7 +48,6 @@ export const refreshPost = (postId) => dispatch => {
       payload: res.data
     })})
     .catch(err => {
-      // history.push("/not-found")
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
@@ -71,16 +70,13 @@ export const addPost = (postData, history) => dispatch => {
     }))
 };
 
-
 //Delete post
 export const deletePost = (postId, history) => dispatch => {
   axios
     .delete(`/api/posts/${postId}`)
     .then(res => {
-      // console.log(res.data);
       history.push("/profile")})
     .catch(err => {
-      // console.log(err);
       dispatch({
       type: GET_ERRORS,
       payload: err.response.data
@@ -95,28 +91,22 @@ export const addComment = (commentInput, postId) => dispatch => {
   axios
     .post(`/api/posts/comment/${postId}`, commentInput)
     .then(res => {
-       console.log(res.data);
-      // dispatch({
-      //   type: GET_POST,
-      //   payload: res.data
-      // })
+      console.log(res.data);
       dispatch(refreshPost(postId));
     })
     .catch(err => {
-      // console.log(err.response.data);
       dispatch({
       type: GET_ERRORS,
       payload: err.response.data
     })})
 }
-// Add comment in postfeed
+
 //Add comment
 export const addCommentPosts = (commentInput, postId) => dispatch => {
   axios
     .post(`/api/posts/comment/${postId}`, commentInput)
     .then((res) => dispatch(refreshGetFollowingPosts()))
     .catch((err) => {
-      // console.log(err.response.data);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -129,41 +119,35 @@ export const deleteComment = (postId, commentId) => dispatch => {
   axios
     .delete(`/api/posts/comment/${postId}/${commentId}`)
     .then(res => {
-      // console.log(res.data);
-      // dispatch({
-      //   type: GET_POST,
-      //   payload: res.data
-      // })
       dispatch(refreshPost(postId));
     })
     .catch(err => {
-      // console.log(err.response.data);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       });
     })
 }
+
 //Get all posts of current user
 export const getUserPosts = () => dispatch => {
   dispatch(setPostLoading());
 axios
   .get("api/posts/currentUser")
   .then((res) => {
-    // console.log(res);
     dispatch({
       type: GET_USER_POSTS,
       payload: res.data,
     });
   })
   .catch((err) => {
-    // console.log(err);
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data,
     });
   });
 }
+
 //Get all posts of another user by their handle
 export const getOtherUsersPosts = (handle) => dispatch => {
   console.log("posts by handle")
@@ -171,14 +155,12 @@ export const getOtherUsersPosts = (handle) => dispatch => {
 axios
   .get(`/api/posts/otheruserposts/${handle}`)
   .then((res) => {
-    // console.log(res);
     dispatch({
       type: GET_USER_POSTS,
       payload: res.data,
     });
   })
   .catch((err) => {
-    // console.log(err);
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data,
@@ -192,19 +174,15 @@ export const setPostLoading = () => {
     type: POST_LOADING
   };
 };
+
 // Like a post 
 export const addLike = (postId) => (dispatch) => {
   axios
     .post(`/api/posts/like/${postId}`)
     .then((res) => {
-    //  dispatch({
-    //    type: GET_POST,
-    //    payload: res.data,
-    //  });
-    dispatch(refreshPost(postId));
+      dispatch(refreshPost(postId));
     })
     .catch((err) => {
-      // console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -217,20 +195,16 @@ export const removeLike = (postId) => (dispatch) => {
   axios
     .post(`/api/posts/unlike/${postId}`)
     .then((res) => {
-      // dispatch({
-      //   type: GET_POST,
-      //   payload: res.data,
-      // });
       dispatch(refreshPost(postId));
     })
     .catch((err) => {
-      // console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
       });
     });
 };
+
 // Get all posts except current user's
 export const allPostsExceptCurrentUsers = () => (dispatch) => {
   dispatch(clearPosts());
@@ -238,14 +212,12 @@ export const allPostsExceptCurrentUsers = () => (dispatch) => {
   axios
     .get(`/api/posts/selected`)
     .then((res) => {
-      // console.log(res);
       dispatch({
         type: GET_POSTS,
         payload: res.data,
       });
     })
     .catch((err) => {
-      // console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -260,14 +232,12 @@ export const getFollowingPosts = () => (dispatch) => {
   axios
     .get(`/api/posts/following`)
     .then((res) => {
-      // console.log(res.data);
       dispatch({
         type: GET_POSTS,
         payload: res.data,
       });
     })
     .catch((err) => {
-      // console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -276,21 +246,17 @@ export const getFollowingPosts = () => (dispatch) => {
 };
 
 // Get all posts from following list without clearPost or setLoading
-// the reason we need 2 actions are similar: getFollowingPosts and refreshPosts are --- getFollowingPosts are used when we move from other page to Home page -- the posts list in Redux store need to be clear
-
 export const refreshGetFollowingPosts = () => (dispatch) => {
 
   axios
     .get(`/api/posts/following`)
     .then((res) => {
-      // console.log(res.data);
       dispatch({
         type: GET_POSTS,
         payload: res.data,
       });
     })
     .catch((err) => {
-      // console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,

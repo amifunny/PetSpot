@@ -79,11 +79,8 @@ export const deletePicture = (history) => dispatch => {
   axios
     .post("/api/users/deleteAvatar")
     .then(res => {
-      // console.log(res.data);
-      //history.push("/profile")})
       window.location.reload(false)})
     .catch(err => {
-      // console.log(err);
       dispatch({
       type: GET_ERRORS,
       payload: err.response.data

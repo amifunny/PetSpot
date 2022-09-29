@@ -67,7 +67,6 @@ class SuggestionsBox extends Component {
                 </Link>
               </div>
 
-              {/* <SuggestionLists profiles={profile.profiles}/> */}
               {suggestionList}
       </div>
     )

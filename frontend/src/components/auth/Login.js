@@ -13,14 +13,21 @@ import PropTypes from 'prop-types';
 import {Container, Row, Col} from 'react-bootstrap'
 
 class Login extends Component {
-  
+
   constructor() {
     super();
+
+    this.demoUser = {
+        email: "example123@email.com",
+        password: "example123"
+    }
+
     this.state = {
-      email: "",
-      password: "",
+      email: this.demoUser.email,
+      password: this.demoUser.password,
       errors: {},
     };
+
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -37,7 +44,6 @@ class Login extends Component {
       password: this.state.password,
     };
     this.props.loginUser(user);
-    // this.props.getCurrentProfile();
   }
   
   componentDidMount() {
@@ -108,16 +114,18 @@ class Login extends Component {
                   type='submit'
                   value='Log In'
                   disabled={!enabled}
-                  // style={{
-                  //   width: "265px",
-                  //   height: "30px",
-                  //   marginTop: "10px",
-                  //   border: "None",
-                  // }}
                   className='authButton'
                 />
               </form>
               <br />
+
+              <div style={{textAlign:"left"}}
+              className="p-2 border border-info">
+                <div>Demo user - check out!</div>
+                <div>Email - {this.demoUser.email}</div>
+                <div>Password - {this.demoUser.password}</div>
+              </div>
+
               <div>
                 <hr id='one' />
                 <span id='or'>OR</span>

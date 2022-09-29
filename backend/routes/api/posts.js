@@ -126,7 +126,7 @@ router.get("/following",
           } else {
             //Display posts from following list only
             Post.find({ user: { $in: following } })
-              .populate("user", ["avatar"]).populate("comments.user", ["avatar"]) // populating to get latest avatar from user model and id directly from user model rather than static avatar and id. helps if commeneted user changes his dp or if he deletes account user will be == null
+              .populate("user", ["avatar"]).populate("comments.user", ["avatar"])
               .sort({ date: -1 })
               .then((posts) => {
                 return res.json(posts);
@@ -155,30 +155,6 @@ router.get(
       .catch((err) => res.status(404).json({ nopostsfound: "No posts found" }));
   }
 );
-// @route   GET api/posts/otheruserposts/:user_id
-// @desc    get all posts of other user by their user_id
-// @access  Public
-// router.get(
-//   "/otheruserposts/:user_id",
-//   // passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//      Post.find()
-//       .sort({ date: -1 })
-//       .then((posts) => {
-//         if(posts) {
-//       let otheruserposts;
-//         otheruserposts = posts.filter(post => 
-//         post.user.toString() === req.params.user_id)
-//         return res.json(otheruserposts);
-        
-//        } else  {
-//        return res.status(404).json({ nopostsfound: "No posts found" });
-//       }})
-//       .catch((err) =>{
-//         console.log(err); 
-//         res.status(404).json({ nopostsfound: "No posts found" })});
-//   }
-// );
 
 // @route   GET api/posts/otheruserposts/:handle
 // @desc    get all posts of other user by their handle
@@ -200,10 +176,10 @@ router.get(
         res.status(404).json({ nopostsfound: "No posts found" })});
   }
 );
+
 // @route   GET api/posts/:id
 // @desc    Get a post by id
 // @access  Public
-
 router.get("/:id", (req, res) => {
   Post.findById(req.params.id)
     .populate("user", ["avatar"])
@@ -277,6 +253,7 @@ router.post(
     });
   }
 );
+
 // @route   POST api/posts/unlike/:post_id
 // @desc    Unlike post
 // @access  Private
@@ -368,32 +345,6 @@ router.post('/:post_id/untag/:user_id', passport.authenticate("jwt", { session: 
     res.status(500).json({ msg: "Server Error" })
   });
 });
-
-// // @route   GET /api/posts/user/tagged
-// // @desc    Get tagged posts of current user
-// // @access  Private
-// router.get("/user/tagged",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     // console.log(req.user.id);
-//     Profile.findOne({user: req.user.id})
-//       .populate({
-//         path: "tagged",
-//         populate: {
-//           path: "postId",
-//           select: "image"
-//         }
-//       })
-//       .then(profile => {
-//         if (profile) {
-//           return res.json(profile.tagged)
-//         } else {
-//           return res.status(400).json({noprofilefound: "No profile found in then"});
-//         }
-//       })
-//       .catch(err => console.log(err));
-//   }
-// );
 
 // @route   POST api/posts/comment/:post_id
 // @desc    Add comment to post

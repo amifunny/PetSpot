@@ -6,8 +6,7 @@ class Comments extends Component {
        
   render() {
     const {postId} = this.props;
-    let filterComments =  this.props.comments.filter((comment, index) => index <=2) //filtering to get only first 3 comments
-    // let comments;
+    let filterComments =  this.props.comments.filter((comment, index) => index <=2)
     let first3comments;
     if(this.props.comments) {
      first3comments = filterComments.map(comment => (
@@ -23,18 +22,11 @@ class Comments extends Component {
       >
          {this.props.comments.length > 3 &&  (<Link
           to={`/post/${postId}`}
-          // type='button'
-          // onClick={(e) => {
-          //   this.toggleComments();
-          //   console.log(this.state.viewAllComments);
-          // }}
           style={{ color: "gray", marginLeft: "25px" }}
         >
       <Fragment>View all {this.props.comments.length} comments</Fragment>
         </Link>)}
         {first3comments}
-
-        {/* {this.state.viewAllComments && <Fragment>{comments} </Fragment>}*/}
       </div>
     );
   }

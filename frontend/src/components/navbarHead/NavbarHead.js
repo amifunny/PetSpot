@@ -151,11 +151,6 @@ export class NavbarHead extends Component {
               to='#'
               style={{ marginTop: "10px" }}
               onClick={this.logoutUserHandle}
-              // style={{
-              //   fontSize: "0.9em",
-              //   fontFamily: "sans-serif",
-              //   color: "black",
-              // }}
             >
               <span className='navbarIcon' style={{ fontSize: "0.9em" }}>
                 Log out
@@ -171,7 +166,6 @@ export class NavbarHead extends Component {
     );
     return (
       <div>
-        {/* Check if user is isAuthenticated, if yes - show Navbar, if no - hide Navbar */}
         {isAuthenticated ? navbar : null}
       </div>
     );

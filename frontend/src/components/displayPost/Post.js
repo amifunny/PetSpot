@@ -252,13 +252,6 @@ class Post extends Component {
   }
 }
 
-// 
-// Profile.propTypes = {
-  
-//   auth: PropTypes.object.isRequired,
-  
-//   logoutUser: PropTypes.func.isRequired,
-// };
 const mapStateToProps = state => ({
   post: state.post,
   auth: state.auth

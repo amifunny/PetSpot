@@ -28,7 +28,6 @@ class AddComment extends Component {
     };
     console.log(this.props.postId);
     this.props.addComment(newComment, this.props.postId);
-    // this.props.addCommentPosts(newComment, this.props.postId);
     this.setState({comment: ""});
   }
   

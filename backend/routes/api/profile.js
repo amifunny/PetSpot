@@ -6,15 +6,11 @@ const User  = require('../../models/User');
 const passport = require('passport');
 const validateProfileInput = require('../../validation/profile');
 const Post = require('../../models/Post');
-// const profile = require('../../validation/profile');
-// const { db } = require('../../models/Profile');
 
 
 // @route   POST api/profile
 // @desc    Create or edit user profile
 // @access  Private
-
-
 router.post('/', passport.authenticate("jwt", {session: false}), (req,res) => {
    //Validation
   const {errors, isValid } = validateProfileInput(req.body); 
@@ -65,6 +61,7 @@ router.post('/', passport.authenticate("jwt", {session: false}), (req,res) => {
   });
 }
 );
+
 // @route   GET api/profile
 // @desc    Get current users profile
 // @access  Private
@@ -150,7 +147,6 @@ passport.authenticate("jwt", {session: false}),
 // @route   GET api/profile/handle/:handle
 // @desc    Get profile by handle
 // @access  Public
-
 router.get("/handle/:handle", (req, res) => {
   const errors = {};
 
@@ -168,7 +164,7 @@ router.get("/handle/:handle", (req, res) => {
     })
     .catch((err) =>{
       console.log(err);
- res.status(404).json(err)
+      res.status(404).json(err)
     })
 });
 
@@ -194,7 +190,6 @@ router.get("/all", (req, res) => {
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
 // @access  Public
-
 router.get("/user/:user_id", (req, res) => {
   const errors = {};
 
@@ -211,40 +206,6 @@ router.get("/user/:user_id", (req, res) => {
       res.status(404).json({ profile: "There is no profile for this user" })
     );
 });
-
-// @route   POST api/profile/follow/:profile_id
-// @desc    Follow profile
-// @access  Private
-// router.post(
-//   "/follow/:profile_id",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     Profile.findById(req.params.profile_id)
-//         .then((profile) => {
-//           if (
-//             profile.followers.filter((follow) => follow.user.toString() === req.user.id)
-//               .length > 0
-//           ) {
-//             return res
-//               .status(400)
-//               .json({ alreadyfollowed: "User already follows this profile" });
-//           }
-//          // Add user id to followers array
-//           profile.followers.unshift({ user: req.user.id });
-//           profile.save();
-//           // .then((profile) => res.json(profile)); sending res.json more than once resulted in error 'http headers are already written to the client browser' in terminal, hence removed and added at the end.
-
-//           //Find your profile
-//           Profile.findOne({ user: req.user.id }).then(myProfile => {
-//           myProfile.following.unshift({ user: profile.user }); //add user id of the person you are following to your following list.
-//           myProfile.save().then(myProfile => res.json([{ following: myProfile.following }, { followers: profile.followers }]));
-//         })
-//         .catch((err) =>
-//           res.status(404).json({ profilenotfound: "No profile found" })
-//         );
-//     });
-//   }
-// );
 
 
 // @route   POST api/profile/follow/:profile_id
@@ -268,11 +229,6 @@ router.post(
               .json({ alreadyfollowed: "User already follows this profile" });
           }
          
-     
-         
-          // .then((profile) => res.json(profile)); sending res.json more than once resulted in error 'http headers are already written to the client browser' in terminal, hence removed and added at the end.
-  
-     
         User.findById(profile.user)
           .then((otherUser) => {
               Profile.findOne({ user: req.user.id }).then((myProfile) => {
@@ -284,7 +240,7 @@ router.post(
                   handle: profile.handle,
                   profile: profile._id
                 };
-                myProfile.following.unshift(newFollow); //add user id, name and avatar of the person you are following to your following list.
+                myProfile.following.unshift(newFollow);
                 
                 const newFollower = {
                   user: req.user.id,
@@ -317,7 +273,6 @@ router.post(
 // @route   POST api/profile/unfollow/:profile_id
 // @desc    Unfollow profile
 // @access  Private
-
 router.post('/unfollow/:profile_id', passport.authenticate("jwt", { session: false }), (req, res) => {
 
   Profile.findById(req.params.profile_id).then((profile) => {
@@ -365,12 +320,8 @@ router.get(
             .populate("user", ["name", "avatar"])
             .then((profiles) => {
               if (profiles) {
-                // console.log(profiles);
+
                 let suggestion = profiles.filter((p) => {
-                // console.log(p.user);
-                //  console.log(p.id);
-                // console.log(p);
-                //  console.log(p._id);
                   if (
                     
                     following.indexOf(p.user._id.toString()) === -1 &&
@@ -379,7 +330,9 @@ router.get(
                     return true;
                   }
                 });
+
                 return res.json(suggestion);
+
               } else {
                 return res.status(404).json({ noprofile: "No profile found" });
               }

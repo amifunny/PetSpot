@@ -5,7 +5,7 @@ class Comments extends Component {
   
   render() {
    
-    let filterComments; // to filter the deleted user's comments.
+    let filterComments;
     if(this.props.comments) {
     filterComments = this.props.comments.filter(
       (comment) => comment.user !== null
@@ -17,7 +17,6 @@ class Comments extends Component {
           key={comment.id}
           comment={comment}
           postId={this.props.postId}
-          //  showAvatar={this.props.showAvatar}
           showDelete={this.props.showDelete}
         />
       ));
